@@ -1,0 +1,58 @@
+name: onebot-platform
+label: QQ (NapCat / OneBot 11)
+kind: platform
+version: 1.0.0
+description: >
+  QQ platform adapter for Hermes Agent via NapCat's OneBot 11 reverse
+  WebSocket. NapCat logs in to a real QQ account and CONNECTS TO this
+  adapter, so no public IP, port mapping, or outbound firewall rule is
+  needed. Supports private and group chat, @-mention gating, inbound
+  image/voice/file download, and native outbound images.
+
+  Security model: DM and group allowlists are enforced in the adapter,
+  the bot identity comes from NapCat's get_login_info (never from the
+  event payload), and any non-loopback listen address requires an access
+  token so a third party cannot inject messages as the bot.
+author: Hermes Agent
+requires_env: []
+optional_env:
+  - name: ONEBOT_HOST
+    description: "WebSocket listen address (default 127.0.0.1)"
+    prompt: "OneBot listen host"
+    password: false
+  - name: ONEBOT_PORT
+    description: "WebSocket listen port (default 6200)"
+    prompt: "OneBot listen port"
+    password: false
+  - name: ONEBOT_PATH
+    description: "WebSocket path NapCat must dial (default /onebot/v11/ws)"
+    prompt: "OneBot WebSocket path"
+    password: false
+  - name: ONEBOT_ACCESS_TOKEN
+    description: "Shared secret NapCat must send as Bearer token (required when binding a non-loopback host)"
+    prompt: "OneBot access token"
+    password: true
+  - name: ONEBOT_ALLOWED_PRIVATE_USERS
+    description: "Comma-separated QQ numbers allowed to DM the bot"
+    prompt: "Allowed private QQ numbers (comma-separated)"
+    password: false
+  - name: ONEBOT_ALLOWED_GROUPS
+    description: "Comma-separated group numbers the bot may serve"
+    prompt: "Allowed group numbers (comma-separated)"
+    password: false
+  - name: ONEBOT_GROUP_REQUIRE_MENTION
+    description: "Require @bot in groups before responding (default true)"
+    prompt: "Require @mention in groups? (true/false)"
+    password: false
+  - name: ONEBOT_ALLOW_ALL_USERS
+    description: "Disable both allowlists — dev only"
+    prompt: "Allow all users? (true/false)"
+    password: false
+  - name: ONEBOT_HOME_CHANNEL
+    description: "Default chat_id for cron / notification delivery"
+    prompt: "Home channel QQ number or group id (or empty)"
+    password: false
+  - name: ONEBOT_HOME_CHANNEL_NAME
+    description: "Human label for the home channel"
+    prompt: "Home channel display name (or empty)"
+    password: false
